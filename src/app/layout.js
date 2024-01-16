@@ -42,9 +42,11 @@ export default function RootLayout({ children }) {
               <input
                 type="text"
                 placeholder="Subscribe for updates"
-                className="px-4 md:px-6 py-3 md:py-4 rounded bg-white w-full outline-none"></input>
-              <Button>Subscribe</Button>
+                className="px-2 md:px-4 py-3 md:py-4 rounded bg-white w-full outline-none 
+                border-b-2 border-white focus:border-black focus:rounded-none transition-all"></input>
+              <Button className="px-2 md:px-4 py-3 md:py-4">Subscribe</Button>
             </div>
+            <p className='text-sm'>© 2024 Recipe Rover. All rights reserved.</p>
           </Container>
         </footer>
         {/* footer section end */}
