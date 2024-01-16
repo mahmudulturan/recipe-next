@@ -46,7 +46,7 @@ export default function RootLayout({ children }) {
                 border-b-2 border-white focus:border-black focus:rounded-none transition-all"></input>
               <Button className="px-2 md:px-4 py-3 md:py-4">Subscribe</Button>
             </div>
-            <p className='text-sm'>© 2024 Recipe Rover. All rights reserved.</p>
+            <p className='text-sm text-center'>© 2024 Recipe Rover. All rights reserved.</p>
           </Container>
         </footer>
         {/* footer section end */}

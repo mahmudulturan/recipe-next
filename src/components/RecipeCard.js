@@ -14,7 +14,7 @@ export default function RecipeCard({ recipe }) {
                     height={216}
                     className='group-hover:contrast-125 group-hover:scale-105 transition duration-300'
                 />
-                <div className='absolute bg-slate-200/20 w-full h-full flex items-center justify-center top-0  translate-y-[500px] group-hover:-translate-y-0 transition-all duration-300'>
+                <div className='absolute bg-text/30 w-full h-full flex items-center justify-center top-0  translate-y-[500px] group-hover:-translate-y-0 transition-all duration-300'>
                     <Button>Details</Button>
                 </div>
             </div>

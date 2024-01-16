@@ -49,11 +49,30 @@ export default async function Home() {
             recipes.map(recipe => <RecipeCard key={recipe._id} recipe={recipe}></RecipeCard>)
           }
         </div>
-        <div className="text-center">
+        <div className="text-center ">
           <Button>Sell All</Button>
         </div>
       </Container>
       {/* recipe showcase section end */}
+
+      {/* Invite user section start */}
+      <div
+        style={{
+          backgroundImage: "url(https://i.ibb.co/tsVPGTV/parralax-Banner.jpg)",
+          backgroundSize: "cover",
+          backgroundRepeat: "no-repeat",
+          backgroundAttachment: "fixed",
+          backgroundPositionX: "center"
+        }}>
+        <div className="bg-text/30 ">
+          <Container className="min-h-[40vh] flex flex-col gap-4 items-center justify-center text-centerf">
+            <h2 className="text-white text-2xl md:text-6xl">Are you expertise in cooking?</h2>
+            <h2 className="text-white text-2xl md:text-6xl">Want to add a new recipe?</h2>
+            <Button>Create New Recipe</Button>
+          </Container>
+        </div>
+      </div>
+      {/* Invite user section end */}
 
     </main>
   )
