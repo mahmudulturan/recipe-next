@@ -35,11 +35,11 @@ export default async function Home() {
           </Container>
         </div>
       </div>
+
+      {/* Stats couter section */}
       <CountStats></CountStats>
-      
+
       {/* banner section end */}
-
-
 
       {/* recipe showcase section start */}
       <Container className="my-20">

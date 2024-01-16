@@ -2,8 +2,8 @@ import { Potta_One } from 'next/font/google'
 import './globals.css'
 import Head from 'next/head'
 import { FaFacebook, FaInstagram, FaYoutube } from "react-icons/fa";
-import Button from "@/components/Button";
-import Container from "@/components/Container";
+import Button from '@/components/Button';
+import Container from '@/components/Container';
 
 const potta = Potta_One({ subsets: ['latin'], weight: "400" })
 

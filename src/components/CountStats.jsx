@@ -1,7 +1,7 @@
 "use client"
 import React from 'react';
 import { CountUp } from "use-count-up";
-import Container from "@/components/Container";
+import Container from './Container';
 
 export default function CountStats() {
 
