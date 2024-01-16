@@ -1,5 +1,6 @@
 import Button from "@/components/Button";
 import Container from "@/components/Container";
+import CountStats from "@/components/CountStats";
 import RecipeCard from "@/components/RecipeCard";
 import getAllRecipe from "@/lib/getAllRecipe";
 
@@ -19,7 +20,7 @@ export default async function Home() {
           backgroundRepeat: "no-repeat",
           backgroundSize: "cover"
         }}>
-        <div className="min-h-screen w-full bg-text/30 flex items-center justify-center">
+        <div className="min-h-[83vh] w-full bg-text/30 flex items-center justify-center">
           <Container>
             <div className="text-center">
               <h1 className="text-3xl md:text-5xl lg:text-7xl text-white drop-shadow-md my-6">Discover the Art of Cooking</h1>
@@ -34,7 +35,11 @@ export default async function Home() {
           </Container>
         </div>
       </div>
+      <CountStats></CountStats>
+      
       {/* banner section end */}
+
+
 
       {/* recipe showcase section start */}
       <Container className="my-20">
