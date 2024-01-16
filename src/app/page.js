@@ -1,7 +1,14 @@
 import Button from "@/components/Button";
 import Container from "@/components/Container";
+import RecipeCard from "@/components/RecipeCard";
+import getAllRecipe from "@/lib/getAllRecipe";
 
-export default function Home() {
+export default async function Home() {
+
+  // fetch recipe data
+  const allrecipes = await getAllRecipe();
+  const recipes = allrecipes.slice(0, 6)
+
   return (
     <main className="">
 
@@ -28,6 +35,25 @@ export default function Home() {
         </div>
       </div>
       {/* banner section end */}
+
+      {/* recipe showcase section start */}
+      <Container className="my-20">
+        <div className="border-l-4 border-primary pl-2">
+          <h1 className="text-3xl md:text-4xl my-2">Featured Recipes</h1>
+          <p className="my-2">Culinary Delights: Explore Our Featured Recipes</p>
+        </div>
+
+        {/* all recipe card */}
+        <div className="grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 my-10">
+          {
+            recipes.map(recipe => <RecipeCard key={recipe._id} recipe={recipe}></RecipeCard>)
+          }
+        </div>
+        <div className="text-center">
+          <Button>Sell All</Button>
+        </div>
+      </Container>
+      {/* recipe showcase section end */}
 
     </main>
   )
