@@ -17,6 +17,9 @@ export default function RecipeCard({ recipe }) {
                 <div className='absolute bg-text/30 w-full h-full flex items-center justify-center top-0  translate-y-[500px] group-hover:-translate-y-0 transition-all duration-300'>
                     <Button>Details</Button>
                 </div>
+                <div>
+                    
+                </div>
             </div>
             <h3 className='my-2 text-xl'>{title}</h3>
         </div>

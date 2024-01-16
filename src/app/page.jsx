@@ -1,6 +1,7 @@
 import Button from "@/components/Button";
 import Container from "@/components/Container";
 import CountStats from "@/components/CountStats";
+import CreateModal from "@/components/CreateModal";
 import RecipeCard from "@/components/RecipeCard";
 import getAllRecipe from "@/lib/getAllRecipe";
 
@@ -73,7 +74,7 @@ export default async function Home() {
           <Container className="min-h-[40vh] flex flex-col gap-4 items-center justify-center text-centerf">
             <h2 className="text-white text-2xl md:text-6xl">Are you expertise in cooking?</h2>
             <h2 className="text-white text-2xl md:text-6xl">Want to add a new recipe?</h2>
-            <Button>Create New Recipe</Button>
+            <CreateModal></CreateModal>
           </Container>
         </div>
       </div>
