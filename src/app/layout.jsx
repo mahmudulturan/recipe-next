@@ -22,8 +22,9 @@ export default function RootLayout({ children }) {
       </Head>
       <body className={potta.className}>
 
-
+        <div className='min-h-screen'>
         {children}
+        </div>
 
         {/* footer section start */}
         <footer style={{
