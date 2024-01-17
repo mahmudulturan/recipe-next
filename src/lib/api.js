@@ -18,6 +18,12 @@ export async function createARecipe(recipeData) {
     return data;
 }
 
+// update a existing recipe
+export async function updateARecipe(id, recipeData) {
+    const { data } = await useAxios.put(`/update-recipe/${id}`, recipeData)
+    return data;
+}
+
 // delete a recipe
 export async function deleteARecipe(id) {
     const { data } = await useAxios.delete(`/delete-recipe/${id}`);

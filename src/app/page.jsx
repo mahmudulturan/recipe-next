@@ -7,8 +7,9 @@ import getAllRecipe from "@/lib/api";
 
 export default async function Home() {
   // fetch recipe data
+  
   const allrecipes = await getAllRecipe();
-  const recipes = allrecipes.slice(0, allrecipes.length)
+  const recipes = allrecipes.slice(0, allrecipes.length);
 
   return (
     <main className="">
@@ -29,7 +30,9 @@ export default async function Home() {
                   type="text"
                   placeholder="Search recipe by title or ingredients"
                   className="px-4 md:px-6 py-3 md:py-4 rounded bg-white w-full outline-none"></input>
-                <Button>Search</Button>
+                <a href="#recipe-section">
+                  <Button>Search</Button>
+                </a>
               </div>
             </div>
           </Container>
@@ -42,12 +45,11 @@ export default async function Home() {
       {/* banner section end */}
 
       {/* recipe showcase section start */}
-      <Container className="my-20">
+      <Container id="recipe-section" className="my-20">
         <div className="border-l-4 border-primary pl-2">
           <h1 className="text-3xl md:text-4xl my-2">Featured Recipes</h1>
           <p className="my-2">Culinary Delights: Explore Our Featured Recipes</p>
         </div>
-
         {/* all recipe card */}
         <div className="grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 my-10">
           {
