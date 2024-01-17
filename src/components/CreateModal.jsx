@@ -5,6 +5,9 @@ import { FaUpload } from "react-icons/fa";
 import Button from './Button';
 import axios from 'axios';
 import { RxCross2 } from "react-icons/rx";
+import { imageUpload } from '@/lib/imageUpload';
+import { createARecipe } from '@/lib/api';
+import Swal from 'sweetalert2';
 
 
 
@@ -46,7 +49,7 @@ export default function CreateModal() {
 
 
     //handle on submit
-    const onSubmit = (data) => {
+    const onSubmit = async (data) => {
         // set error if input are not filled
         if (!selectedImage) {
             return setManualError({ type: "image", errorMessage: "Please upload an image" })
@@ -60,16 +63,40 @@ export default function CreateModal() {
         }
 
         //upload image
+        const { data: imageData } = await imageUpload(selectedImage)
 
         //save data on database
-        const recipeData = { title: data.recipeName, ingredients: selectedIngredients, instructions: recipeInstruction }
-        console.log(recipeData);
-        // console.log(data);
+        const recipeData = {
+            title: data.recipeName,
+            ingredients: selectedIngredients,
+            instructions: recipeInstruction,
+            image: imageData.display_url
+        }
+        const response = await createARecipe(recipeData);
+        // show toast
+        if (response.acknowledged) {
+            Swal.fire({
+                position: "top-end",
+                icon: "success",
+                title: "Recipe added successfully",
+                showConfirmButton: false,
+                timer: 1500
+            });
+        }
+        else {
+            Swal.fire({
+                position: "top-end",
+                icon: "error",
+                title: "Recipe added failed",
+                showConfirmButton: false,
+                timer: 1500
+            });
+        }
     }
     return (
         <>
             <Button onClick={() => setIsOpen(true)}>
-                 + Create New Recipe
+                + Create New Recipe
             </Button>
             <div className={`${isOpen ? "scale-100" : "scale-0"}  duration-300 ease-out  h-screen w-full px-2 top-0 right-0 flex items-center justify-center z-50 fixed`}>
                 <div className='relative w-full md:w-8/12 lg:w-4/12'>
@@ -98,11 +125,11 @@ export default function CreateModal() {
                                     htmlFor="imageInput">
                                     <FaUpload className='text-xl'></FaUpload>
                                     {
-                                        selectedImage ? selectedImage[0]?.name : "Upload A Image Of Food"
+                                        selectedImage ? selectedImage?.name : "Upload A Image Of Food"
                                     }
                                 </label>
                                 <input
-                                    onChange={(e) => setSelectedImage(e.target.files)}
+                                    onChange={(e) => setSelectedImage(e.target.files[0])}
                                     type="file"
                                     id="imageInput" hidden />
                             </div>

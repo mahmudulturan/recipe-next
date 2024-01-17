@@ -3,13 +3,12 @@ import Container from "@/components/Container";
 import CountStats from "@/components/CountStats";
 import CreateModal from "@/components/CreateModal";
 import RecipeCard from "@/components/RecipeCard";
-import getAllRecipe from "@/lib/getAllRecipe";
+import getAllRecipe from "@/lib/api";
 
 export default async function Home() {
-
   // fetch recipe data
   const allrecipes = await getAllRecipe();
-  const recipes = allrecipes.slice(0, 6)
+  const recipes = allrecipes.slice(0, allrecipes.length)
 
   return (
     <main className="">
