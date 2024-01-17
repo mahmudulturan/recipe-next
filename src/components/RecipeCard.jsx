@@ -2,10 +2,11 @@ import Image from 'next/image';
 import React from 'react';
 import Button from './Button';
 import { MdDelete, MdEdit } from "react-icons/md";
+import DeleteModal from './DeleteModal';
 
 
 export default function RecipeCard({ recipe }) {
-    const { image, instructions, ingredients, title } = recipe;
+    const { image, instructions, ingredients, title, _id } = recipe;
     return (
         <div className='group text-center '>
             <div className='overflow-hidden h-[216px] relative rounded'>
@@ -21,7 +22,7 @@ export default function RecipeCard({ recipe }) {
                 </div>
                 <div className='absolute top-3 right-3 flex gap-2  translate-y-[500px] group-hover:-translate-y-0 transition-all duration-300'>
                     <span className='p-1 rounded-full bg-white hover:bg-white/90 cursor-pointer'><MdEdit className='text-2xl'></MdEdit></span>
-                    <span className='p-1 rounded-full bg-white hover:bg-white/90 cursor-pointer'><MdDelete className='text-2xl'></MdDelete></span>
+                    <DeleteModal id={_id}></DeleteModal>
                 </div>
             </div>
             <h3 className='my-2 text-xl'>{title}</h3>
