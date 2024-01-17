@@ -2,9 +2,9 @@
 import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { FaUpload } from "react-icons/fa";
+import { RxCross2 } from "react-icons/rx";
 import Button from './Button';
 import axios from 'axios';
-import { RxCross2 } from "react-icons/rx";
 import { imageUpload } from '@/lib/imageUpload';
 import { createARecipe } from '@/lib/api';
 import Swal from 'sweetalert2';
@@ -46,6 +46,13 @@ export default function CreateModal() {
             return setManualError(null)
         }
     }, [selectedImage, selectedIngredients, recipeInstruction])
+
+
+    // to delete selected ingridients
+    const handleIngriedentsRemove = (removeIngriedent) => {
+        const filter = selectedIngredients.filter(ingriedent => ingriedent !== removeIngriedent)
+        setSelectedIngredients(filter)
+    }
 
 
     //handle on submit
@@ -156,7 +163,9 @@ export default function CreateModal() {
                             {manualError?.type === "ingredients" && <span className='py-2'>{manualError.errorMessage}</span>}
                             <p>
                                 {
-                                    selectedIngredients.map((ingredient, indx) => <span key={indx}>{ingredient}, </span>)
+                                    selectedIngredients.map((ingredient, indx) => <span className='relative group' key={indx}>{ingredient},
+                                        <span onClick={() => handleIngriedentsRemove(ingredient)} className='p-0.5 rounded-full bg-white absolute text-sm group-hover:scale-100 scale-0 z-10 right-0 duration-300 cursor-pointer'><RxCross2></RxCross2></span>
+                                    </span>)
                                 }
                             </p>
 
