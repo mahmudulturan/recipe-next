@@ -6,6 +6,12 @@ export default async function getAllRecipe() {
     return data;
 }
 
+// get single recipe
+export async function getARecipe(id) {
+    const { data } = await useAxios.get(`/all-recipe/${id}`);
+    return data;
+}
+
 // create a new recipe
 export async function createARecipe(recipeData) {
     const { data } = await useAxios.post('/add-recipe', recipeData)
