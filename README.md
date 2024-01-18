@@ -1,6 +1,7 @@
 # Recipe Management App
 
 live link: https://recipe-next-seven.vercel.app/
+
 server side repository: https://github.com/mahmudulturan/recipe-server.git
 
 ## Project Features: 
