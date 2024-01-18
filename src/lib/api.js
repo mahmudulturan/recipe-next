@@ -3,7 +3,6 @@ import { useAxios } from "./useAxios";
 // get all recipe
 export default async function getAllRecipe(searchKey) {
     if (searchKey) {
-        console.log('hello');
         const { data } = await useAxios.get(`/all-recipe?${searchKey}`);
         return data;
     }
@@ -13,7 +12,7 @@ export default async function getAllRecipe(searchKey) {
 
 // get single recipe
 export async function getARecipe(id) {
-    const { data } = await useAxios.get(`/all-recipe/${id}`);
+    const { data } = await useAxios.get(`/all-recipe/${id}`, { cache: 'no-store' });
     return data;
 }
 
@@ -25,7 +24,7 @@ export async function createARecipe(recipeData) {
 
 // update a existing recipe
 export async function updateARecipe(id, recipeData) {
-    const { data } = await useAxios.put(`/update-recipe/${id}`, recipeData)
+    const { data } = await useAxios.put(`/update-recipe/${id}`, recipeData,)
     return data;
 }
 

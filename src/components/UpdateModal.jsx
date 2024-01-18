@@ -15,6 +15,7 @@ import { useRouter } from "next/navigation";
 export default function UpdateModal({ recipe, isOpen, setIsOpen }) {
     const { image, instructions, ingredients, title, _id } = recipe;
     const [imageUrl, setImageUrl] = useState("");
+    const [isLoading, setIsLoading] = useState(false);
     const [selectedIngredients, setSelectedIngredients] = useState([...ingredients]);
     const [allIngredients, setAllIngredients] = useState([]);
     const [recipeInstruction, setRecipeInstruction] = useState(instructions);
@@ -51,12 +52,14 @@ export default function UpdateModal({ recipe, isOpen, setIsOpen }) {
         const filter = selectedIngredients.filter(ingriedent => ingriedent !== removeIngriedent)
         setSelectedIngredients(filter)
     }
-    
+
     // handle image upload
     const handleImageUpload = async (e) => {
+        setIsLoading(true)
         const imageFile = e.target.files[0];
         const { data: imageData } = await imageUpload(imageFile)
         setImageUrl(imageData.display_url)
+        setIsLoading(false)
     }
 
 
@@ -174,7 +177,7 @@ export default function UpdateModal({ recipe, isOpen, setIsOpen }) {
                             {manualError?.type === "instruction" && <span className='py-2'>{manualError.errorMessage}</span>}
                         </div>
 
-                        <Button type="submit" className="w-full mt-2"> Update Recipe</Button>
+                        <Button disabled={isLoading} type="submit" className="w-full mt-2">{isLoading ? "Image Uploading" : "+ Add Recipe"} </Button>
                     </form>
                     <button
                         onClick={() => setIsOpen(false)}

@@ -11,13 +11,19 @@ import { useSearchParams } from 'next/navigation'
 
 export default function RecipesPage() {
     const [recipeCards, setRecipeCards] = useState([]);
+    const [isEmpty, setIsEmpty] = useState(false)
     const searchParams = useSearchParams()
     useEffect(() => {
         const fetchData = async () => {
             try {
+                setIsEmpty(false)
                 const recipes = await getAllRecipe(searchParams);
+                if (recipes.length <= 0) {
+                    setIsEmpty(true)
+                }
                 setRecipeCards(recipes);
             } catch (error) {
+                setIsEmpty(false)
                 console.error("Error fetching recipes:", error);
             }
         };
@@ -28,8 +34,12 @@ export default function RecipesPage() {
     // handle search
     const handleSearch = async () => {
         const searchInput = document.getElementById("searchInput").value;
+        setIsEmpty(true)
         const recipes = await getAllRecipe(`searchKey=${searchInput}`);
         setRecipeCards(recipes);
+        if (recipes.length <= 0) {
+            setIsEmpty(true)
+        }
     };
 
     // handle enter key press
@@ -66,17 +76,18 @@ export default function RecipesPage() {
                     </div>
                 </div>
                 {/* all recipe card */}
+
+                <div className="grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 my-10">
+                    {recipeCards?.map((recipe) => (
+                        <RecipeCard key={recipe._id} recipe={recipe} />
+                    ))}
+                </div>
+
                 {
-                    recipeCards.length>0 ?
-                        <div className="grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 my-10">
-                            {recipeCards?.map((recipe) => (
-                                <RecipeCard key={recipe._id} recipe={recipe} />
-                            ))}
-                        </div>
-                        :
-                        <div className="flex items-center justify-center min-h-[60vh]">
-                            Not Found Any Recipe
-                        </div>
+                    isEmpty &&
+                    <div className="flex items-center justify-center min-h-[60vh]">
+                        Not Found Any Recipe
+                    </div>
                 }
             </Container>
         </div>
