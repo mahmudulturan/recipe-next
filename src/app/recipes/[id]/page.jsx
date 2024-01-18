@@ -7,11 +7,21 @@ import React from 'react';
 import { MdArrowBack } from "react-icons/md";
 import samplePhoto from "@/assets/images/samplePhoto.jpg"
 
+export async function generateMetadata({ params }) {
+  const { id } = params;
+  const recipe = await getARecipe(id);
+  const { title, instructions } = recipe;
+  return {
+    title: `${title} | Recipe Rover`,
+    description: instructions,
+  };
+}
+
+
 export default async function RecipeDetails({ params }) {
   const { id } = params;
   const recipe = await getARecipe(id);
   const { image, instructions, ingredients, title, _id } = recipe;
-
   return (
     <Container className="min-h-screen">
       {/* back to home button */}
@@ -36,7 +46,7 @@ export default async function RecipeDetails({ params }) {
         <ul>
           <h6>All Ingredients:</h6>
           {
-            ingredients?.map((ingredient, indx) => <li key={indx}>{ingredient}</li>)
+            ingredients?.map((ingredient, indx) => <li key={indx}>-{ingredient}</li>)
           }
         </ul>
       </div>

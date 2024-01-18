@@ -7,6 +7,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { MdArrowBack } from "react-icons/md";
 
+
 export default function RecipesPage() {
     const [recipeCards, setRecipeCards] = useState([]);
 
@@ -43,7 +44,7 @@ export default function RecipesPage() {
                 <Link href="/">
                     <Button className="inline-block gap-2 my-6"><MdArrowBack className='text-2xl inline mx-1'></MdArrowBack> Back To Home</Button>
                 </Link>
-                
+
                 <div className="flex gap-6 flex-col md:flex-row items-center justify-between">
                     <div className="border-l-4 border-primary pl-2">
                         <h1 className="text-3xl md:text-4xl my-2">All Recipes</h1>
