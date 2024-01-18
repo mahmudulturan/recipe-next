@@ -1,28 +1,23 @@
 'use client'
 import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { FaUpload } from "react-icons/fa";
 import { RxCross2 } from "react-icons/rx";
 import Button from './Button';
 import axios from 'axios';
 import { imageUpload } from '@/lib/imageUpload';
 import { updateARecipe } from '@/lib/api';
 import Swal from 'sweetalert2';
-import { MdEdit } from "react-icons/md";
 
 
 
-
-export default function UpdateModal({ recipe }) {
-    const [isOpen, setIsOpen] = useState(false);
+export default function UpdateModal({ recipe, isOpen, setIsOpen }) {
     const { image, instructions, ingredients, title, _id } = recipe;
-    const [selectedImage, setSelectedImage] = useState(null);
+    const [imageUrl, setImageUrl] = useState("");
     const [selectedIngredients, setSelectedIngredients] = useState([...ingredients]);
     const [allIngredients, setAllIngredients] = useState([]);
-    const [recipeInstruction, setRecipeInstruction] = useState("");
+    const [recipeInstruction, setRecipeInstruction] = useState(instructions);
     const [manualError, setManualError] = useState(null);
     const { register, handleSubmit, formState: { errors } } = useForm()
-
 
     // fetching ingriedients item
     useEffect(() => {
@@ -39,16 +34,13 @@ export default function UpdateModal({ recipe }) {
 
     // manual error handleing
     useEffect(() => {
-        if (selectedImage) {
-            return setManualError(null)
-        }
         if (!selectedIngredients.length <= 0) {
             return setManualError(null)
         }
         if (!recipeInstruction.length <= 0) {
             return setManualError(null)
         }
-    }, [selectedImage, selectedIngredients, recipeInstruction])
+    }, [selectedIngredients, recipeInstruction])
 
 
     // to delete selected ingridients
@@ -56,31 +48,31 @@ export default function UpdateModal({ recipe }) {
         const filter = selectedIngredients.filter(ingriedent => ingriedent !== removeIngriedent)
         setSelectedIngredients(filter)
     }
+    
+    // handle image upload
+    const handleImageUpload = async (e) => {
+        const imageFile = e.target.files[0];
+        const { data: imageData } = await imageUpload(imageFile)
+        setImageUrl(imageData.display_url)
+    }
 
 
     //handle on submit
     const onSubmit = async (data) => {
         // set error if input are not filled
-        if (!selectedImage) {
-            return setManualError({ type: "image", errorMessage: "Please upload an image" })
-        }
-        else if (selectedIngredients.length <= 0) {
+        if (selectedIngredients.length <= 0) {
             return setManualError({ type: "ingredients", errorMessage: "Please select ingredients" })
         }
         if (recipeInstruction.length <= 0) {
-            console.log('object');
             return setManualError({ type: "instruction", errorMessage: "Write the recipe instruction!" })
         }
 
-        //upload image
-        const { data: imageData } = await imageUpload(selectedImage)
-
         //save data on database
-        const recipeData = {
+        const recipeData = await {
             title: data.recipeName,
             ingredients: selectedIngredients,
             instructions: recipeInstruction,
-            image: imageData.display_url
+            image: imageUrl || image
         }
         const response = await updateARecipe(_id, recipeData);
         // show toast
@@ -92,6 +84,7 @@ export default function UpdateModal({ recipe }) {
                 showConfirmButton: false,
                 timer: 1500
             });
+            setIsOpen(false)
         }
         else {
             Swal.fire({
@@ -107,11 +100,6 @@ export default function UpdateModal({ recipe }) {
 
     return (
         <>
-            <span onClick={() => setIsOpen(true)}
-                className='p-1 rounded-full bg-white hover:bg-white/90 cursor-pointer flex'>
-                <MdEdit className='text-2xl'></MdEdit>
-            </span>
-
             <div className={`${isOpen ? "scale-100" : "scale-0"}  duration-300 ease-out  h-screen w-full px-2 top-0 right-0 flex items-center justify-center z-50 fixed`}>
                 <div className='relative w-full md:w-8/12 lg:w-4/12'>
 
@@ -134,22 +122,14 @@ export default function UpdateModal({ recipe }) {
 
                             {/*upload input for upload image */}
                             <div>
-                                <label
-                                    className="px-4 py-3 w-full outline-none rounded my-2 bg-white cursor-pointer flex items-center gap-2"
-                                    htmlFor="updateImageField"
-                                >
-                                    <FaUpload className="text-xl" />
-                                    {selectedImage ? selectedImage.name : "Upload an Image of Food"}
-                                </label>
                                 <input
-                                    onChange={(e) => setSelectedImage(e.target.files[0])}
+                                    onChange={handleImageUpload}
                                     type="file"
                                     id="updateImageField"
                                     accept="image/*"
                                 // hidden
                                 />
                             </div>
-                            {manualError?.type === "image" && <span className='py-2'>{manualError.errorMessage}</span>}
 
 
                             {/*selct option for selct ingriedents */}
@@ -172,7 +152,7 @@ export default function UpdateModal({ recipe }) {
                             {manualError?.type === "ingredients" && <span className='py-2'>{manualError.errorMessage}</span>}
                             <p>
                                 {
-                                    selectedIngredients.map((ingredient, indx) => <span className='relative groupa' key={indx}>{ingredient},
+                                    selectedIngredients.map((ingredient, indx) => <span className='relative group cursor-default' key={indx}>{ingredient},
                                         <span onClick={() => handleIngriedentsRemove(ingredient)} className='p-0.5 rounded-full bg-white absolute text-sm group-hover:scale-100 scale-0 z-10 right-0 duration-300 cursor-pointer'><RxCross2></RxCross2></span>
                                     </span>)
                                 }

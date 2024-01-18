@@ -5,6 +5,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
 import { MdArrowBack } from "react-icons/md";
+import samplePhoto from "@/assets/images/samplePhoto.jpg"
 
 export default async function RecipeDetails({ params }) {
   const { id } = params;
@@ -12,16 +13,16 @@ export default async function RecipeDetails({ params }) {
   const { image, instructions, ingredients, title, _id } = recipe;
 
   return (
-    <Container className="min-h-screen py-20">
+    <Container className="min-h-screen">
       {/* back to home button */}
       <Link href="/">
-        <Button className="inline-block gap-2 my-10"><MdArrowBack className='text-2xl inline mx-1'></MdArrowBack> Back To Home</Button>
+        <Button className="inline-block gap-2 mt-5 md:my-10"><MdArrowBack className='text-2xl inline mx-1'></MdArrowBack> Back To Home</Button>
       </Link>
 
-      <div className='text-center max-w-4xl min-h-[68vh] mx-auto bg-secondary my-10 rounded'>
+      <div className='text-center max-w-4xl min-h-[68vh] mx-auto bg-secondary my-5 md:my-10 rounded pb-5 px-2'>
         <div className='pt-10 pb-5'>
           <Image
-            src={image}
+            src={image || samplePhoto}
             alt={`Image of ${title}`}
             width={416}
             height={216}
