@@ -4,12 +4,13 @@ import CountStats from "@/components/CountStats";
 import CreateModal from "@/components/CreateModal";
 import RecipeCard from "@/components/RecipeCard";
 import getAllRecipe from "@/lib/api";
+import Link from "next/link";
 
 export default async function Home() {
   // fetch recipe data
-  
+
   const allrecipes = await getAllRecipe();
-  const recipes = allrecipes.slice(0, allrecipes.length);
+  const recipes = allrecipes.slice(0, 6);
 
   return (
     <main className="">
@@ -30,9 +31,7 @@ export default async function Home() {
                   type="text"
                   placeholder="Search recipe by title or ingredients"
                   className="px-4 md:px-6 py-3 md:py-4 rounded bg-white w-full outline-none"></input>
-                <a href="#recipe-section">
                   <Button>Search</Button>
-                </a>
               </div>
             </div>
           </Container>
@@ -57,7 +56,9 @@ export default async function Home() {
           }
         </div>
         <div className="text-center ">
-          <Button>Sell All</Button>
+          <Link href="/recipes">
+            <Button>Sell All</Button>
+          </Link>
         </div>
       </Container>
       {/* recipe showcase section end */}

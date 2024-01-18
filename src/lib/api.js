@@ -1,7 +1,12 @@
 import { useAxios } from "./useAxios";
 
 // get all recipe
-export default async function getAllRecipe() {
+export default async function getAllRecipe(searchKey) {
+    if (searchKey) {
+        console.log('hello');
+        const { data } = await useAxios.get(`/all-recipe?searchKey=${searchKey}`);
+        return data;
+    }
     const { data } = await useAxios.get('/all-recipe');
     return data;
 }

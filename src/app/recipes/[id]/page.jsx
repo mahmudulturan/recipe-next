@@ -15,7 +15,7 @@ export default async function RecipeDetails({ params }) {
     <Container className="min-h-screen py-20">
       {/* back to home button */}
       <Link href="/">
-        <Button className="flex items-center justify-center gap-2"><MdArrowBack className='text-2xl'></MdArrowBack> Back To Home</Button>
+        <Button className="inline-block gap-2 my-10"><MdArrowBack className='text-2xl inline mx-1'></MdArrowBack> Back To Home</Button>
       </Link>
 
       <div className='text-center max-w-4xl min-h-[68vh] mx-auto bg-secondary my-10 rounded'>
