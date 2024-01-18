@@ -7,6 +7,8 @@ import axios from 'axios';
 import { imageUpload } from '@/lib/imageUpload';
 import { updateARecipe } from '@/lib/api';
 import Swal from 'sweetalert2';
+import { useRouter } from "next/navigation";
+
 
 
 
@@ -18,6 +20,7 @@ export default function UpdateModal({ recipe, isOpen, setIsOpen }) {
     const [recipeInstruction, setRecipeInstruction] = useState(instructions);
     const [manualError, setManualError] = useState(null);
     const { register, handleSubmit, formState: { errors } } = useForm()
+    const router = useRouter()
 
     // fetching ingriedients item
     useEffect(() => {
@@ -85,6 +88,7 @@ export default function UpdateModal({ recipe, isOpen, setIsOpen }) {
                 timer: 1500
             });
             setIsOpen(false)
+            router.push(`/recipes/${_id}`)
         }
         else {
             Swal.fire({

@@ -22,13 +22,13 @@ export default async function Home() {
           backgroundRepeat: "no-repeat",
           backgroundSize: "cover"
         }}>
-        <div className="min-h-[83vh] w-full bg-text/30 flex items-center justify-center">
-          <Container className="min-h-[40vh] flex flex-col gap-4 items-center justify-center text-centerf">
+        <div className="min-h-[83vh] w-full bg-text/30 flex md:items-center justify-center py-24">
+          {/* <Container className="min-h-[40vh] flex flex-col gap-4 items-center justify-center text-centerf">
             <h2 className="text-white text-2xl md:text-6xl">Are you expertise in cooking?</h2>
             <h2 className="text-white text-2xl md:text-6xl">Want to add a new recipe?</h2>
             <CreateModal></CreateModal>
-          </Container>
-          {/* <Container>
+          </Container> */}
+          <Container>
             <div className="text-center">
               <h1 className="text-3xl md:text-5xl lg:text-7xl text-white drop-shadow-md my-6">Discover the Art of Cooking</h1>
               <div className="max-w-xl mx-auto flex flex-col md:flex-row gap-3">
@@ -39,7 +39,7 @@ export default async function Home() {
                   <Button>Search</Button>
               </div>
             </div>
-          </Container> */}
+          </Container>
         </div>
       </div>
 

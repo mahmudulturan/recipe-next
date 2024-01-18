@@ -8,6 +8,7 @@ import axios from 'axios';
 import { imageUpload } from '@/lib/imageUpload';
 import { createARecipe } from '@/lib/api';
 import Swal from 'sweetalert2';
+import { useRouter } from "next/navigation";
 
 
 
@@ -20,6 +21,7 @@ export default function CreateModal() {
     const [recipeInstruction, setRecipeInstruction] = useState("");
     const [manualError, setManualError] = useState(null);
     const { register, handleSubmit, formState: { errors }, reset } = useForm()
+    const router = useRouter()
 
     // fetching ingriedients item
     useEffect(() => {
@@ -90,11 +92,12 @@ export default function CreateModal() {
                 showConfirmButton: false,
                 timer: 1500
             });
-
+            
             reset()
             setImageUrl("")
             setSelectedIngredients([])
             setIsOpen(false)
+            router.push('/recipes')
         }
         else {
             Swal.fire({
