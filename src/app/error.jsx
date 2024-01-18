@@ -12,17 +12,19 @@ export default function Error({ error, reset }) {
     }, [error])
 
     return (
-        <div className='min-h-screen flex flex-col items-center justify-center'>
+        <div className='min-h-screen flex gap-3 flex-col items-center justify-center'>
             <h2>Something went wrong!</h2>
             <Lottie animationData={ErrorAnimation}></Lottie>
-            <Button onClick={() => reset()}>
-                Try again
-            </Button>
-            <Link href="/">
-                <Button>
-                   Return Home
+            <div className='flex justify-center gap-6'>
+                <Button onClick={() => reset()}>
+                    Try again
                 </Button>
-            </Link>
+                <Link href="/">
+                    <Button>
+                        Return Home
+                    </Button>
+                </Link>
+            </div>
         </div>
     )
 }

@@ -6,28 +6,29 @@ import getAllRecipe from "@/lib/api";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { MdArrowBack } from "react-icons/md";
+import { useSearchParams } from 'next/navigation'
 
 
 export default function RecipesPage() {
     const [recipeCards, setRecipeCards] = useState([]);
-
+    const searchParams = useSearchParams()
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const recipes = await getAllRecipe();
+                const recipes = await getAllRecipe(searchParams);
                 setRecipeCards(recipes);
             } catch (error) {
                 console.error("Error fetching recipes:", error);
             }
         };
-
         fetchData();
-    }, []);
+    }, [searchParams])
+
 
     // handle search
     const handleSearch = async () => {
         const searchInput = document.getElementById("searchInput").value;
-        const recipes = await getAllRecipe(searchInput);
+        const recipes = await getAllRecipe(`searchKey=${searchInput}`);
         setRecipeCards(recipes);
     };
 
@@ -65,11 +66,18 @@ export default function RecipesPage() {
                     </div>
                 </div>
                 {/* all recipe card */}
-                <div className="grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 my-10">
-                    {recipeCards?.map((recipe) => (
-                        <RecipeCard key={recipe._id} recipe={recipe} />
-                    ))}
-                </div>
+                {
+                    recipeCards.length>0 ?
+                        <div className="grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 my-10">
+                            {recipeCards?.map((recipe) => (
+                                <RecipeCard key={recipe._id} recipe={recipe} />
+                            ))}
+                        </div>
+                        :
+                        <div className="flex items-center justify-center min-h-[60vh]">
+                            Not Found Any Recipe
+                        </div>
+                }
             </Container>
         </div>
     );

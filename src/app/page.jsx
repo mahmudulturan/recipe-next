@@ -3,6 +3,7 @@ import Container from "@/components/Container";
 import CountStats from "@/components/CountStats";
 import CreateModal from "@/components/CreateModal";
 import RecipeCard from "@/components/RecipeCard";
+import RecipeSearch from "@/components/RecipeSearch";
 import getAllRecipe from "@/lib/api";
 import Link from "next/link";
 
@@ -23,21 +24,10 @@ export default async function Home() {
           backgroundSize: "cover"
         }}>
         <div className="min-h-[83vh] w-full bg-text/30 flex md:items-center justify-center py-24">
-          {/* <Container className="min-h-[40vh] flex flex-col gap-4 items-center justify-center text-centerf">
-            <h2 className="text-white text-2xl md:text-6xl">Are you expertise in cooking?</h2>
-            <h2 className="text-white text-2xl md:text-6xl">Want to add a new recipe?</h2>
-            <CreateModal></CreateModal>
-          </Container> */}
           <Container>
             <div className="text-center">
               <h1 className="text-3xl md:text-5xl lg:text-7xl text-white drop-shadow-md my-6">Discover the Art of Cooking</h1>
-              <div className="max-w-xl mx-auto flex flex-col md:flex-row gap-3">
-                <input
-                  type="text"
-                  placeholder="Search recipe by title or ingredients"
-                  className="px-4 md:px-6 py-3 md:py-4 rounded bg-white w-full outline-none"></input>
-                  <Button>Search</Button>
-              </div>
+              <RecipeSearch></RecipeSearch>
             </div>
           </Container>
         </div>
