@@ -14,11 +14,12 @@ import Swal from 'sweetalert2';
 export default function CreateModal() {
     const [isOpen, setIsOpen] = useState(false);
     const [selectedImage, setSelectedImage] = useState(null);
+    const [imageUrl, setImageUrl] = useState("");
     const [selectedIngredients, setSelectedIngredients] = useState([]);
     const [allIngredients, setAllIngredients] = useState([]);
     const [recipeInstruction, setRecipeInstruction] = useState("");
     const [manualError, setManualError] = useState(null);
-    const { register, handleSubmit, formState: { errors } } = useForm()
+    const { register, handleSubmit, formState: { errors }, reset } = useForm()
 
     // fetching ingriedients item
     useEffect(() => {
@@ -53,14 +54,18 @@ export default function CreateModal() {
         setSelectedIngredients(filter)
     }
 
+    // handle image upload
+    const handleImageUpload = async (e) => {
+        const imageFile = e.target.files[0];
+        setSelectedImage(imageFile)
+        const { data: imageData } = await imageUpload(imageFile)
+        setImageUrl(imageData.display_url)
+    }
 
     //handle on submit
     const onSubmit = async (data) => {
         // set error if input are not filled
-        if (!selectedImage) {
-            return setManualError({ type: "image", errorMessage: "Please upload an image" })
-        }
-        else if (selectedIngredients.length <= 0) {
+        if (selectedIngredients.length <= 0) {
             return setManualError({ type: "ingredients", errorMessage: "Please select ingredients" })
         }
         if (recipeInstruction.length <= 0) {
@@ -68,15 +73,12 @@ export default function CreateModal() {
             return setManualError({ type: "instruction", errorMessage: "Write the recipe instruction!" })
         }
 
-        //upload image
-        const { data: imageData } = await imageUpload(selectedImage)
-
         //save data on database
         const recipeData = {
             title: data.recipeName,
             ingredients: selectedIngredients,
             instructions: recipeInstruction,
-            image: imageData.display_url
+            image: imageUrl
         }
         const response = await createARecipe(recipeData);
         // show toast
@@ -88,6 +90,11 @@ export default function CreateModal() {
                 showConfirmButton: false,
                 timer: 1500
             });
+
+            reset()
+            setImageUrl("")
+            setSelectedIngredients([])
+            setIsOpen(false)
         }
         else {
             Swal.fire({
@@ -134,7 +141,8 @@ export default function CreateModal() {
                                     }
                                 </label>
                                 <input
-                                    onChange={(e) => setSelectedImage(e.target.files[0])}
+                                    onChange={handleImageUpload}
+                                    // onChange={(e) => setSelectedImage(e.target.files[0])}
                                     className=''
                                     type="file"
                                     accept="image/*"
